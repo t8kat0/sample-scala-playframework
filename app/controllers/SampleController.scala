@@ -36,7 +36,7 @@ object SampleController extends Controller {
         "uri: " + request.uri
         + "\nmethod: " + request.method
         + "\npath: " + request.path
-        + "\nqueryString: " + request.queryString.toString
+        + "\nqueryString: " + request.queryString
     )
   }
 
@@ -55,6 +55,69 @@ object SampleController extends Controller {
    *   GET http://localhost:9000/sample/unimplemented 501(Not Implemented)
    */
   def unimplemented = TODO
+
+  def path_parameter(id: Long) = Action { request =>
+    val message = "uri: " + request.uri    +
+        "\nmethod: "      + request.method +
+        "\npath: "        + request.path   +
+        "\nqueryString: " + request.queryString
+    println("[DEBUG] " + message)
+    Ok("SampleController#path_parameter: id=" + id + "\n\n" + message)
+  }
+
+  /**
+   * クエリパラメータを指定するアクション:
+   *   GET http://localhost:9000/sample/query_parameter?id=1234 200(OK)
+   *   GET http://localhost:9000/sample/query_parameter?id=abc  400(Bad Request)
+   */
+  def query_parameter(id: Long) = Action { request =>
+    val message = "uri: " + request.uri    +
+        "\nmethod: "      + request.method +
+        "\npath: "        + request.path   +
+        "\nqueryString: " + request.queryString
+    println("[DEBUG] " + message)
+    Ok("SampleController#query_parameter: id=" + id + "\n\n" + message)
+  }
+
+  /**
+   * ルーティング設定にワイルドカードを指定することで任意(可変個)のパスパラメータを取得するアクション:
+   *
+   *    GET: http://localhost:9000/sample/wird_card/foo/+/1234/-/bar/
+   *     HTTP-Status: 200(OK)
+   *     path: "foo/+/1234/-/bar/"
+   *
+   *   GET: http://localhost:9000/sample/wird_card/
+   *     HTTP-Status: 404(Not Found)
+   */
+  def wird_card(path: String) = Action { request =>
+    val message = "uri: " + request.uri    +
+        "\nmethod: "      + request.method +
+        "\npath: "        + request.path   +
+        "\nqueryString: " + request.queryString
+    println("[DEBUG] " + message)
+    Ok("SampleController#wird_card: path=" + path + "\n\n" + message)
+  }
+
+  /**
+   * ルーティング設定に正規表現を指定することで任意のパスパラメータを取得するアクション:
+   * 
+   * GET: http://localhost:9000/sample/regex/1234
+   *   HTTP-Status: 200(OK)
+   *
+   * GET: http://localhost:9000/sample/regex/
+   *   HTTP-Status: 404(Not Found)
+   *
+   * GET: http://localhost:9000/sample/regex/abcd
+   *   HTTP-Status: 404(Not Found)
+   */
+  def regex(id: Long) = Action { request =>
+    val message = "uri: " + request.uri    +
+        "\nmethod: "      + request.method +
+        "\npath: "        + request.path   +
+        "\nqueryString: " + request.queryString
+    println("[DEBUG] " + message)
+    Ok("SampleController#regex: id=" + id + "\n\n" + message)
+  }
 
   def read = Action {
     Ok(views.html.index("SampleController#index"))

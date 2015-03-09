@@ -9,6 +9,10 @@ GET     /sample/hello               controllers.SampleController.hello
 GET     /sample/world               controllers.SampleController.world
 GET     /sample/redirect            controllers.SampleController.redirect
 GET     /sample/unimplemented       controllers.SampleController.unimplemented
+GET     /sample/path_parameter/:id  controllers.SampleController.path_parameter(id: Long)
+GET     /sample/query_parameter     controllers.SampleController.query_parameter(id: Long)
+GET     /sample/wird_card/*path     controllers.SampleController.wird_card(path: String)
+GET     /sample/regex/$id<[0-9]+>   controllers.SampleController.regex(id: Long)
 
 GET     /sample/                    controllers.SampleController.read
 # POST    /sample/                    controllers.SampleController.create
