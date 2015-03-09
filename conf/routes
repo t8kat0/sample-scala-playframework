@@ -5,5 +5,16 @@
 # Home page
 GET     /                           controllers.Application.index
 
+GET     /sample/hello               controllers.SampleController.hello
+GET     /sample/world               controllers.SampleController.world
+GET     /sample/redirect            controllers.SampleController.redirect
+GET     /sample/unimplemented       controllers.SampleController.unimplemented
+
+GET     /sample/                    controllers.SampleController.read
+# POST    /sample/                    controllers.SampleController.create
+# PUT     /sample/                    controllers.SampleController.update
+# DELETE  /sample/                    controllers.SampleController.delete
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
